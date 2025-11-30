@@ -1,14 +1,14 @@
 import { Controller, Get, Post, Body, HttpCode } from "@nestjs/common";
 import { ApiTags, ApiOperation, ApiResponse, ApiBody } from "@nestjs/swagger";
-import { AppService } from "./app.service";
+import { PointsService } from "./points.service";
 import { AddTransactionDto } from "./dto/add-transaction.dto";
 import { SpendPointsDto } from "./dto/spend-points.dto";
 import { SpendResponseDto } from "./dto/spend-response.dto";
 
 @ApiTags("Points")
 @Controller()
-export class AppController {
-  constructor(private readonly appService: AppService) {}
+export class PointsController {
+  constructor(private readonly pointsService: PointsService) {}
 
   @Post("add")
   @HttpCode(200)
@@ -17,7 +17,7 @@ export class AppController {
   @ApiResponse({ status: 200, description: "Transaction added successfully" })
   @ApiResponse({ status: 400, description: "Invalid request body" })
   addTransaction(@Body() dto: AddTransactionDto): void {
-    this.appService.addTransaction(dto);
+    this.pointsService.addTransaction(dto);
   }
 
   @Post("spend")
@@ -34,7 +34,7 @@ export class AppController {
     description: "Insufficient points or invalid request",
   })
   spendPoints(@Body() dto: SpendPointsDto): SpendResponseDto[] {
-    return this.appService.spendPoints(dto);
+    return this.pointsService.spendPoints(dto);
   }
 
   @Get("balance")
@@ -48,6 +48,6 @@ export class AppController {
     },
   })
   getBalance(): Record<string, number> {
-    return this.appService.getBalances();
+    return this.pointsService.getBalances();
   }
 }
