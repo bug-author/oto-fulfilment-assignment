@@ -9,7 +9,7 @@ interface Transaction {
 }
 
 @Injectable()
-export class AppService {
+export class PointsService {
   private transactions: Transaction[] = [];
 
   addTransaction(dto: AddTransactionDto): void {
